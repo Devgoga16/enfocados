@@ -1,0 +1,34 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/logo.webp';
+import { negocio, sedes, waUrl } from '../data/site';
+---
+<section class="hero" id="inicio">
+  <span class="sparkle s1"></span><span class="sparkle s2"></span><span class="sparkle s3"></span><span class="sparkle s4"></span>
+  <div class="container hero__inner">
+    <div class="hero__copy">
+      <p class="pill pill--light">{negocio.lema}</p>
+      <h1>Acompañamos a cada niño en su camino de <span class="hl-yellow">aprendizaje</span> y <span class="hl-pink">desarrollo</span></h1>
+      <p class="hero__lead">Somos un centro psicológico integral con servicios especializados para <strong>bebés, niños, adolescentes y adultos</strong>. Te esperamos en nuestras sedes de Comas y Los Olivos.</p>
+      <div class="hero__actions">
+        <a class="btn btn--wa btn--lg" href={waUrl('Hola, quisiera agendar una evaluación en Enfocados.')} target="_blank" rel="noopener" data-origen="hero"><Icon name="wa" /> Agenda tu evaluación</a>
+        <a class="btn btn--ghost btn--lg" href="#terapias">Ver terapias <Icon name="arrow" /></a>
+      </div>
+      <ul class="hero__places">
+        {Object.values(sedes).map((s) => <li><Icon name="pin" /> {s.nombre}</li>)}
+      </ul>
+    </div>
+    <div class="hero__art" aria-hidden="true">
+      <div class="hero__blob"></div>
+      <Image class="hero__owl" src={logo} alt="" width={420} loading="eager" fetchpriority="high" />
+      <span class="chip chip--a">Lenguaje</span>
+      <span class="chip chip--b">Aprendizaje</span>
+      <span class="chip chip--c">Conducta</span>
+      <span class="chip chip--d">Sensorial</span>
+      <span class="planet planet--1"></span>
+      <span class="planet planet--2"></span>
+    </div>
+  </div>
+  <svg class="wave wave--bottom" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70c120 30 240 40 380 20s260-60 420-50 280 60 420 50 160-30 220-40v70H0z" fill="var(--sky)"/></svg>
+</section>

@@ -1,0 +1,25 @@
+---
+const pasos = [
+  { color: 'pink', titulo: 'Escríbenos', texto: 'Cuéntanos por WhatsApp qué te preocupa y en qué sede prefieres ser atendido.' },
+  { color: 'yellow', titulo: 'Agenda tu evaluación', texto: 'Coordinamos una fecha para conocer al paciente e identificar sus necesidades.' },
+  { color: 'mint', titulo: 'Inicia la terapia', texto: 'Te recomendamos las terapias adecuadas y empezamos a trabajar juntos.' },
+];
+---
+<section class="steps section" id="como-empezar">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Paso a paso</p>
+      <h2>¿Cómo empezar?</h2>
+      <p>Empezar es sencillo. Te acompañamos desde el primer mensaje.</p>
+    </header>
+    <ol class="steps__list">
+      {pasos.map((p, i) => (
+        <li class="step reveal">
+          <span class={`step__num bg-${p.color}`}>{i + 1}</span>
+          <h3>{p.titulo}</h3>
+          <p>{p.texto}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

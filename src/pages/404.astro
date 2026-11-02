@@ -1,0 +1,20 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import logo from '../assets/logo.webp';
+import { negocio, waUrl } from '../data/site';
+---
+<BaseLayout title={`Página no encontrada | ${negocio.nombreCorto}`} noindex>
+  <section class="notfound section">
+    <div class="container notfound__inner">
+      <Image src={logo} alt="" width={200} height={200} class="notfound__owl" />
+      <h1>¡Ups! Esta página se nos perdió</h1>
+      <p>Nuestro búho la buscó por todas partes, pero no la encontró. Vuelve al inicio o escríbenos directamente.</p>
+      <div class="notfound__actions">
+        <a class="btn btn--blue btn--lg" href="/"><Icon name="home" /> Ir al inicio</a>
+        <a class="btn btn--wa btn--lg" href={waUrl('Hola, quisiera información sobre Enfocados.')} target="_blank" rel="noopener" data-origen="404"><Icon name="wa" /> WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

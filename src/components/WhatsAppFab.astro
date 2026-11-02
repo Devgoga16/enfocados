@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+import { sedes, waUrl } from '../data/site';
+---
+<div class="fab" id="fab">
+  <div class="fab__panel" id="fabPanel" hidden>
+    <p>¿Con qué sede quieres hablar?</p>
+    {Object.values(sedes).map((s) => (
+      <a class="btn btn--wa btn--sm btn--block" href={waUrl(`Hola, quisiera información sobre sus servicios (${s.nombre}).`, s.id)} target="_blank" rel="noopener" data-origen="boton-flotante">{s.nombre}</a>
+    ))}
+  </div>
+  <button class="fab__btn" id="fabBtn" aria-label="Escríbenos por WhatsApp" aria-expanded="false" aria-controls="fabPanel">
+    <Icon name="wa" />
+  </button>
+</div>

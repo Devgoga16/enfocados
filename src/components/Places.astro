@@ -1,0 +1,38 @@
+---
+import Icon from './Icon.astro';
+import { formatPhone, sedes, waUrl } from '../data/site';
+---
+<section class="places section" id="sedes">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Te esperamos</p>
+      <h2>Nuestras sedes</h2>
+      <p>Elige la sede más cercana y escríbenos directamente.</p>
+    </header>
+    <div class="places__grid">
+      {Object.values(sedes).map((s) => (
+        <article class="place reveal">
+          <div class="place__map">
+            {s.mapaEmbed ? (
+              <iframe src={s.mapaEmbed} title={`Mapa de la ${s.nombre}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
+            ) : (
+              <>
+                <Icon name="pin" />
+                <span>{s.distrito}, Lima</span>
+              </>
+            )}
+          </div>
+          <div class="place__body">
+            <h3>{s.nombre}</h3>
+            <ul>
+              <li><Icon name="pin" /> {s.direccion ?? <span>Distrito de {s.distrito}. <em>Consúltanos la dirección por WhatsApp.</em></span>}</li>
+              <li><Icon name="phone" /> <a href={`tel:+${s.telefono}`}>{formatPhone(s.telefono)}</a></li>
+              {s.horario && <li><Icon name="clock" /> {s.horario}</li>}
+            </ul>
+            <a class="btn btn--wa" href={waUrl(`Hola, quisiera información de la ${s.nombre}.`, s.id)} target="_blank" rel="noopener" data-origen={`sede-${s.id}`}><Icon name="wa" /> WhatsApp {s.nombre}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

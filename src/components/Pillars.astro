@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+
+const pilares = [
+  { icono: 'heart', color: 'pink', titulo: 'Atención personalizada', texto: 'Cada paciente es único. Escuchamos a la familia y adaptamos la terapia a sus necesidades.' },
+  { icono: 'users', color: 'yellow', titulo: 'Profesionales especializados', texto: 'Un equipo de distintas especialidades que trabaja de la mano para un acompañamiento integral.' },
+  { icono: 'check', color: 'mint', titulo: 'Resultados comprobados', texto: 'Hacemos seguimiento a cada proceso para que veas los avances paso a paso.' },
+];
+---
+<section class="pillars" aria-label="Por qué elegirnos">
+  <div class="container pillars__grid">
+    {pilares.map((p) => (
+      <article class="pillar reveal">
+        <span class={`pillar__icon bg-${p.color}`}><Icon name={p.icono} /></span>
+        <h2 class="h3">{p.titulo}</h2>
+        <p>{p.texto}</p>
+      </article>
+    ))}
+  </div>
+  <svg class="wave wave--bottom" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40c160 40 320 50 520 30s360-50 540-40 260 40 380 30v40H0z" fill="var(--white)"/></svg>
+</section>

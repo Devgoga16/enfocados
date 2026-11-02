@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/logo.webp';
+import { promoVigente, promocion } from '../data/site';
+
+const links = [
+  { href: '/#nosotros', texto: 'Nosotros' },
+  { href: '/#terapias', texto: 'Terapias' },
+  { href: '/#como-empezar', texto: 'Cómo empezar' },
+  ...(promoVigente() ? [{ href: '/#promociones', texto: 'Promociones', promo: true }] : []),
+  { href: '/#sedes', texto: 'Sedes' },
+  { href: '/#preguntas', texto: 'Preguntas' },
+];
+---
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="/" class="brand" aria-label="Enfocados, ir al inicio">
+      <Image src={logo} alt="" width={48} height={48} densities={[1, 2]} loading="eager" />
+      <span class="brand__text"><small>Centro Psicológico Integral</small>Enfocados</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      {links.map((l) => (
+        <a href={l.href} data-promo-expira={l.promo ? promocion.hasta : undefined}>{l.texto}</a>
+      ))}
+      <a href="/#contacto" class="btn btn--pink nav__cta">Agenda tu evaluación</a>
+    </nav>
+    <a href="/#contacto" class="btn btn--pink header__cta">Agenda tu evaluación</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+      <Icon name="menu" />
+    </button>
+  </div>
+</header>

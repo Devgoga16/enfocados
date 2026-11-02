@@ -1,0 +1,26 @@
+---
+import Icon from './Icon.astro';
+import { terapias, waUrl } from '../data/site';
+---
+<section class="therapies section" id="terapias">
+  <svg class="wave wave--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40c200-40 420-40 640-10s440 40 800-10V0H0z" fill="var(--white)"/></svg>
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Nuestros servicios</p>
+      <h2>Terapias especializadas</h2>
+      <p>Diferentes especialidades trabajando juntas para acompañar el desarrollo de tu hijo o hija.</p>
+    </header>
+    <div class="therapies__grid">
+      {terapias.map((t) => (
+        <article class="therapy reveal" style={`--c:var(--${t.color})`}>
+          <span class="therapy__icon"><Icon name={t.icono} /></span>
+          <h3>{t.nombre}</h3>
+          <p>{t.texto}</p>
+          <a href={waUrl(`Hola, quisiera información sobre ${t.nombre}.`)} target="_blank" rel="noopener" data-origen={`terapia-${t.nombre}`}>
+            Consultar <span class="sr-only">sobre {t.nombre}</span> <Icon name="arrow" />
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

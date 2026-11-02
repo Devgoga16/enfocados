@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import { novedades } from '../data/site';
+---
+<section class="news section" id="novedades">
+  <div class="container">
+    <header class="section-head reveal">
+      <p class="eyebrow">Comunidad Enfocados</p>
+      <h2>Novedades y eventos</h2>
+      <p>Aprender también es celebrar. Así compartimos momentos especiales con nuestras familias.</p>
+    </header>
+    <div class="news__grid">
+      {novedades.map((n) => (
+        <article class="news-card reveal">
+          <div class={`news-card__media bg-${n.fondo}-grad`}>
+            <span class="news-card__tag">{n.etiqueta}</span>
+            <Icon name={n.icono} />
+          </div>
+          <div class="news-card__body">
+            <p class="news-card__date">{n.fecha}</p>
+            <h3>{n.titulo}</h3>
+            <p>{n.texto}</p>
+            {n.enlace && (
+              <a class="link" href={n.enlace.url} target="_blank" rel="noopener">{n.enlace.texto} <Icon name="arrow" /></a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

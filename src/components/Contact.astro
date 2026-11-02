@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { promoVigente, sedePrincipal, sedes, terapias } from '../data/site';
+
+const telefonos = Object.fromEntries(Object.values(sedes).map((s) => [s.id, { nombre: s.distrito, telefono: s.telefono }]));
+---
+<section class="contact section" id="contacto">
+  <svg class="wave wave--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40c200-40 420-40 640-10s440 40 800-10V0H0z" fill="var(--cream)"/></svg>
+  <div class="container contact__inner">
+    <div class="contact__copy reveal">
+      <p class="eyebrow">Agenda tu evaluación</p>
+      <h2>Cuéntanos cómo podemos ayudarte</h2>
+      <p>Completa estos datos y te enviaremos directo a WhatsApp con tu mensaje listo. Respondemos a la brevedad.</p>
+      <ul class="contact__list">
+        <li><Icon name="check" /> Sin formularios largos</li>
+        <li><Icon name="check" /> Te atiende directamente la sede que elijas</li>
+        <li><Icon name="check" /> Te orientamos sobre la terapia adecuada</li>
+      </ul>
+    </div>
+    <form class="form reveal" id="contactForm" novalidate data-sedes={JSON.stringify(telefonos)}>
+      <div class="field">
+        <label for="f-nombre">Tu nombre</label>
+        <input id="f-nombre" name="nombre" type="text" autocomplete="name" required placeholder="Ej. María Torres">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-paciente">¿Para quién es?</label>
+          <select id="f-paciente" name="paciente" required>
+            <option value="">Selecciona</option>
+            <option>Bebé</option>
+            <option>Niño o niña</option>
+            <option>Adolescente</option>
+            <option>Adulto</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-edad">Edad</label>
+          <input id="f-edad" name="edad" type="text" placeholder="Ej. 5 años">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-terapia">Servicio de interés</label>
+        <select id="f-terapia" name="terapia">
+          <option>Aún no lo sé, necesito orientación</option>
+          {terapias.map((t) => <option>{t.nombre}</option>)}
+          {promoVigente() && <option>Promoción de aniversario</option>}
+        </select>
+      </div>
+      <fieldset class="field">
+        <legend>Sede de preferencia</legend>
+        <div class="seg">
+          {Object.values(sedes).map((s) => (
+            <label><input type="radio" name="sede" value={s.id} checked={s.id === sedePrincipal}><span>{s.distrito}</span></label>
+          ))}
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="f-msg">Mensaje <small>(opcional)</small></label>
+        <textarea id="f-msg" name="mensaje" rows="3" placeholder="Cuéntanos brevemente lo que te preocupa"></textarea>
+      </div>
+      <label class="consent">
+        <input type="checkbox" name="acepto" required>
+        <span>Acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y el uso de mis datos para ser contactado.</span>
+      </label>
+      <p class="form__error" id="formError" role="alert" hidden></p>
+      <button class="btn btn--wa btn--lg btn--block" type="submit"><Icon name="wa" /> Enviar por WhatsApp</button>
+    </form>
+  </div>
+</section>

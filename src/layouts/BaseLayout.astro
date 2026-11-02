@@ -1,0 +1,121 @@
+---
+import '@fontsource/fredoka/600.css';
+import '@fontsource/fredoka/700.css';
+import '@fontsource/nunito/400.css';
+import '@fontsource/nunito/600.css';
+import '@fontsource/nunito/700.css';
+import '@fontsource/nunito/800.css';
+import '../styles/global.css';
+
+import { getImage } from 'astro:assets';
+import IconSprite from '../components/IconSprite.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+import logo from '../assets/logo.webp';
+import { analitica, negocio, sedes } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = `${negocio.nombre} | Terapias en Comas y Los Olivos`,
+  description = negocio.descripcion,
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: logo, width: 600, format: 'jpg', quality: 82 });
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+const appleIcon = await getImage({ src: logo, width: 180, format: 'png' });
+
+// Datos estructurados para Google (negocio local con dos sedes)
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalBusiness',
+  name: negocio.nombre,
+  alternateName: negocio.nombreCorto,
+  description: negocio.descripcion,
+  slogan: negocio.lema,
+  url: Astro.site?.href,
+  logo: ogImageUrl.href,
+  image: ogImageUrl.href,
+  telephone: `+${sedes.comas.telefono}`,
+  sameAs: [negocio.facebook],
+  medicalSpecialty: ['Psychiatric', 'Neurologic', 'SpeechPathology', 'PhysicalTherapy', 'Pediatric'],
+  department: Object.values(sedes).map((s) => ({
+    '@type': 'MedicalClinic',
+    name: `${negocio.nombreCorto} - ${s.nombre}`,
+    telephone: `+${s.telefono}`,
+    address: {
+      '@type': 'PostalAddress',
+      ...(s.direccion ? { streetAddress: s.direccion } : {}),
+      addressLocality: s.distrito,
+      addressRegion: 'Lima',
+      addressCountry: 'PE',
+    },
+  })),
+};
+---
+<!doctype html>
+<html lang="es-PE">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  {noindex && <meta name="robots" content="noindex">}
+  <meta name="theme-color" content="#1b2a6b">
+  <link rel="icon" href="/favicon.webp" type="image/webp">
+  <link rel="apple-touch-icon" href={appleIcon.src}>
+  <link rel="sitemap" href="/sitemap-index.xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_PE">
+  <meta property="og:site_name" content={negocio.nombre}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={ogImageUrl}>
+  <meta name="twitter:card" content="summary">
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  {analitica.ga4 && (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${analitica.ga4}`}></script>
+      <script is:inline define:vars={{ id: analitica.ga4 }}>
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { dataLayer.push(arguments); };
+        gtag('js', new Date());
+        gtag('config', id);
+      </script>
+    </>
+  )}
+  {analitica.metaPixel && (
+    <script is:inline define:vars={{ id: analitica.metaPixel }}>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', id);
+      fbq('track', 'PageView');
+    </script>
+  )}
+  <script is:inline>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <IconSprite />
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <Header />
+  <main id="contenido">
+    <slot />
+  </main>
+  <Footer />
+  <WhatsAppFab />
+  <script>
+    import '../scripts/main.ts';
+  </script>
+</body>
+</html>

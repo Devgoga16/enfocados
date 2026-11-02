@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatPhone, negocio, sedes } from '../data/site';
+
+// PENDIENTE: el centro debe revisar este texto y completar su razón social y RUC.
+const actualizado = '2 de noviembre de 2026';
+---
+<BaseLayout title={`Política de privacidad | ${negocio.nombreCorto}`} description="Cómo tratamos los datos personales que compartes con Enfocados.">
+  <section class="legal section">
+    <div class="container legal__inner">
+      <p class="eyebrow">Protección de datos personales</p>
+      <h1>Política de privacidad</h1>
+      <p class="legal__date">Última actualización: {actualizado}</p>
+
+      <h2>1. Responsable</h2>
+      <p>El responsable del tratamiento de tus datos es el {negocio.nombre}, con sedes en Comas y Los Olivos (Lima, Perú). Puedes comunicarte con nosotros a través de los números de WhatsApp indicados al final de esta página.</p>
+
+      <h2>2. Datos que recopilamos</h2>
+      <p>Cuando usas el formulario de contacto, recopilamos tu nombre, para quién es la consulta, la edad del paciente, el servicio de interés, la sede de preferencia y el mensaje que decidas escribir. Estos datos no se guardan en esta web: se arma un mensaje que tú mismo envías por WhatsApp.</p>
+
+      <h2>3. Finalidad</h2>
+      <p>Usamos tus datos únicamente para responder tu consulta, coordinar evaluaciones o citas y darte información sobre nuestros servicios. No vendemos ni compartimos tus datos con terceros para fines comerciales.</p>
+
+      <h2>4. Datos de menores de edad</h2>
+      <p>La información sobre menores debe ser proporcionada por su madre, padre o apoderado. Tratamos estos datos con especial cuidado y confidencialidad.</p>
+
+      <h2>5. Tus derechos</h2>
+      <p>De acuerdo con la Ley N.° 29733, Ley de Protección de Datos Personales, puedes ejercer tus derechos de acceso, rectificación, cancelación y oposición escribiéndonos por WhatsApp.</p>
+
+      <h2>6. Medición y cookies</h2>
+      <p>Esta web puede usar herramientas de medición (como Google Analytics o Meta Pixel) para conocer de forma anónima cuántas personas nos visitan y nos contactan, y así mejorar nuestros servicios.</p>
+
+      <h2>7. Contacto</h2>
+      <ul>
+        {Object.values(sedes).map((s) => <li>{s.nombre}: <a href={`tel:+${s.telefono}`}>{formatPhone(s.telefono)}</a></li>)}
+      </ul>
+      <p><a class="btn btn--blue" href="/">Volver al inicio</a></p>
+    </div>
+  </section>
+</BaseLayout>

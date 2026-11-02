@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/logo.webp';
+import { negocio } from '../data/site';
+
+const tonos = ['pink', 'yellow', 'mint', 'sky'];
+---
+<section class="about section" id="nosotros">
+  <div class="container about__inner">
+    <div class="about__media reveal">
+      <div class="about__card">
+        <Image src={logo} alt="Logo de Enfocados: búho con lentes rosados sobre un cerebro con el símbolo de la psicología" width={420} />
+      </div>
+      <div class="about__badge">
+        <strong>{negocio.aniosCumplidos}</strong>
+        <span>años creciendo<br>junto a las familias</span>
+      </div>
+      <span class="balloon" aria-hidden="true"></span>
+    </div>
+    <div class="about__copy reveal">
+      <p class="eyebrow">Sobre Enfocados</p>
+      <h2>Un espacio integral para crecer, aprender y desarrollarse</h2>
+      <p>En el {negocio.nombre} brindamos servicios integrales especializados en salud mental y desarrollo. Unimos distintas terapias en un solo lugar para que cada familia encuentre el acompañamiento que necesita.</p>
+      <ul class="ages">
+        {negocio.publico.map((p, i) => <li><span class={`bg-${tonos[i]}-soft`}>{p}</span></li>)}
+      </ul>
+      <blockquote class="motto">“{negocio.firma}”</blockquote>
+      <a class="btn btn--blue" href="#terapias">Conoce nuestras terapias <Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>

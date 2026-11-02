@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/logo.webp';
+import { formatPhone, negocio, sedes, waUrl } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <svg class="wave wave--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40c200-40 420-40 640-10s440 40 800-10V0H0z" fill="var(--sky-soft)"/></svg>
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a href="/" class="brand brand--light">
+        <Image src={logo} alt="" width={52} height={52} />
+        <span class="brand__text"><small>Centro Psicológico Integral</small>Enfocados</span>
+      </a>
+      <p>{negocio.lema}, {negocio.frase.charAt(0).toLowerCase() + negocio.frase.slice(1)}.</p>
+      <a class="social" href={negocio.facebook} target="_blank" rel="noopener" aria-label="Facebook de Enfocados"><Icon name="fb" /></a>
+    </div>
+    <div>
+      <h2 class="footer__title">Navega</h2>
+      <ul>
+        <li><a href="/#nosotros">Nosotros</a></li>
+        <li><a href="/#terapias">Terapias</a></li>
+        <li><a href="/#novedades">Novedades</a></li>
+        <li><a href="/#preguntas">Preguntas frecuentes</a></li>
+        <li><a href="/#contacto">Contacto</a></li>
+        <li><a href="/privacidad">Política de privacidad</a></li>
+      </ul>
+    </div>
+    <div>
+      {Object.values(sedes).map((s) => (
+        <>
+          <h2 class="footer__title">{s.nombre}</h2>
+          <ul>
+            {s.direccion && <li>{s.direccion}</li>}
+            <li><a href={`tel:+${s.telefono}`}>{formatPhone(s.telefono)}</a></li>
+            <li><a href={waUrl(`Hola, quisiera información de la ${s.nombre}.`, s.id)} target="_blank" rel="noopener" data-origen="footer">WhatsApp</a></li>
+          </ul>
+        </>
+      ))}
+    </div>
+  </div>
+  <p class="footer__copy">© {year} {negocio.nombre}. Todos los derechos reservados.</p>
+</footer>

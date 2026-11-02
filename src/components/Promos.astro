@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+import { promoVigente, promocion, waUrl } from '../data/site';
+---
+{promoVigente() && (
+  <section class="promos section" id="promociones" data-promo-expira={promocion.hasta}>
+    <svg class="wave wave--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40c200-40 420-40 640-10s440 40 800-10V0H0z" fill="var(--white)"/></svg>
+    <span class="sparkle s2"></span><span class="sparkle s4"></span>
+    <div class="container">
+      <header class="section-head section-head--light reveal">
+        <p class="pill pill--yellow"><Icon name="gift" /> {promocion.etiqueta}</p>
+        <h2>{promocion.titulo}</h2>
+        <p>{promocion.bajada}</p>
+      </header>
+      <div class="promos__grid">
+        {promocion.paquetes.map((p) => (
+          <article class="ticket reveal" style={`--c:var(--${p.color})`}>
+            <p class="ticket__label">Paquete</p>
+            <p class="ticket__qty">{p.sesiones} <span>sesiones</span></p>
+            <p class="ticket__freq"><Icon name="calendar" /> {p.frecuencia}</p>
+            <p class="ticket__price"><small>S/</small>{p.precio}</p>
+            <a class="btn btn--sm" href={waUrl(`Hola, me interesa el paquete de ${p.sesiones} sesiones (S/ ${p.precio}) de la promoción de aniversario.`)} target="_blank" rel="noopener" data-origen={`promo-${p.sesiones}`}>
+              Lo quiero <span class="sr-only">: paquete de {p.sesiones} sesiones</span>
+            </a>
+          </article>
+        ))}
+      </div>
+      <div class="raffle reveal">
+        <span class="raffle__icon"><Icon name="gift" /></span>
+        <p><strong>{promocion.extra.titulo}</strong> <Fragment set:html={promocion.extra.texto} /></p>
+      </div>
+      <p class="promos__note">{promocion.nota}</p>
+    </div>
+    <svg class="wave wave--bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50c240-40 480-50 720-20s480 40 720 0v50H0z" fill="var(--cream)"/></svg>
+  </section>
+)}

@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/logo.webp';
+import { waUrl } from '../data/site';
+---
+<section class="cta" aria-label="Agenda una evaluación">
+  <svg class="wave wave--top" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30c240 40 480 50 720 20s480-40 720 0V0H0z" fill="var(--cream)"/></svg>
+  <span class="sparkle s1"></span><span class="sparkle s3"></span>
+  <div class="container cta__inner reveal">
+    <Image src={logo} alt="" class="cta__owl" width={110} height={110} />
+    <div>
+      <h2>¿Tienes dudas sobre el desarrollo de tu hijo?</h2>
+      <p>Conversemos. Agenda una evaluación y te orientamos sobre la terapia más adecuada.</p>
+    </div>
+    <a class="btn btn--yellow btn--lg" href={waUrl('Hola, quisiera agendar una evaluación en Enfocados.')} target="_blank" rel="noopener" data-origen="banda-cta"><Icon name="wa" /> Escríbenos por WhatsApp</a>
+  </div>
+  <svg class="wave wave--bottom" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50c240-40 480-50 720-20s480 40 720 0v50H0z" fill="var(--white)"/></svg>
+</section>
